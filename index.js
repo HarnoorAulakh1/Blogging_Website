@@ -10,7 +10,7 @@ import { title } from "process";
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/Blog');
+  await mongoose.connect('mongodb+srv://harnooraulakh16:aulakh16@cluster0.2vpo7fm.mongodb.net/Blog');
 }
 //mongodb+srv://harnooraulakh16:aulakh16@cluster0.2vpo7fm.mongodb.net
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -48,9 +48,13 @@ app.post("/compose", (req, res) => {
     title: req.body["heading"],
     post: req.body["blog"],
   });
-  st.save();
-  //blogs.push(st);
-  res.redirect("/");
+  st.save()
+  .then(err=> {
+      res.redirect("/");
+  })
+  .catch(err=>{
+    console.log(err);
+  });
 });
 
 app.get("/about", (req, res) => {
@@ -73,18 +77,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/posts/:id", (req, res) => {
-  var temp = _.capitalize(req.params.id);
-  // if (temp === _.lowerCase(blogs[i].title)) {
-  //   res.render(__dirname + "/views/post.ejs", {
-  //     heading: blogs[i].title,
-  //     post: blogs[i].post,
-  //   });
-  // }
-  // else if (i === blogs.length) {
-  //   res.redirect("/");
-  // }
-
-  Blog.findOne({ title: temp })
+  var temp = req.params.id;
+  Blog.findOne({ _id: temp })
     .then(data => {
       if (data) {
         res.render(__dirname + "/views/post.ejs", {

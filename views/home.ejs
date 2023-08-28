@@ -1,8 +1,16 @@
 <%- include("partials/header") %>
-<h1>HOME</h1>
-<p><%= name %></p>
-<% for( let index = 0; index < array.length; index++ ) { %>
-    <u><h3><%= array[index].title%></h3></u>
-        <p><%= array[index].post.substring(0,100)%><a href="/posts/<%= array[index].title%>" %>>Read More</a></p>
-<% } %>
-<%- include("partials/footer") -%>
+    <h1>HOME</h1>
+    <p>
+        <%= name %>
+    </p>
+    <% for( let index=0; index < array.length; index++ ) { %>
+        <u>
+            <h3>
+                <%= array[index].title%>
+            </h3>
+        </u>
+        <p>
+            <%= array[index].post.substring(0,100)%><a href="/posts/<%= array[index]._id%>" %>>Read More</a>
+        </p>
+        <% } %>
+            <%- include("partials/footer") -%>
